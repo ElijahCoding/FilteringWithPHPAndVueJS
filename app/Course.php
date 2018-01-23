@@ -14,4 +14,9 @@ class Course extends Model
     {
       return (new CourseFilters($request))->add($filters)->filter($builder);
     }
+
+    public function subjects()
+    {
+      return $this->morphToMany(Subject::class, 'subjectable');
+    }
 }

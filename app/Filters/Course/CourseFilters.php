@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Filters\FiltersAbstract;
 use App\Filters\Course\TypeFilter;
 use App\Filters\Course\AccessFilter;
+use App\Filters\Course\SubjectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\Course\DifficultyFilter;
 
@@ -14,7 +15,8 @@ class CourseFilters extends FiltersAbstract
   protected $filters = [
     'access' => AccessFilter::class,
     'difficulty' => DifficultyFilter::class,
-    'type' => TypeFilter::class
+    'type' => TypeFilter::class,
+    'subject' => SubjectFilter::class
   ];
 
 
