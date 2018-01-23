@@ -7,6 +7,7 @@ use App\Filters\FiltersAbstract;
 use App\Filters\Course\TypeFilter;
 use App\Filters\Course\AccessFilter;
 use App\Filters\Course\SubjectFilter;
+use App\Filters\Course\StartedFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\Course\DifficultyFilter;
 
@@ -16,7 +17,8 @@ class CourseFilters extends FiltersAbstract
     'access' => AccessFilter::class,
     'difficulty' => DifficultyFilter::class,
     'type' => TypeFilter::class,
-    'subject' => SubjectFilter::class
+    'subject' => SubjectFilter::class,
+    'started' => StartedFilter::class
   ];
 
 
