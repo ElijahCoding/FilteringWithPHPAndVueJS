@@ -21,8 +21,15 @@ abstract class FiltersAbstract
     foreach ($this->getFilters() as $filter => $class) {
       var_dump($this->resolveFilter($filter));
     }
-
+    die();
     return $builder;
+  }
+
+  public function add(array $filters)
+  {
+    $this->filters = array_merge($this->filters, $filters);
+
+    return $this;
   }
 
   protected function getFilters()
