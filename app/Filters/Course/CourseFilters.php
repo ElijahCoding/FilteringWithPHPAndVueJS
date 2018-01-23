@@ -10,6 +10,7 @@ use App\Filters\Course\SubjectFilter;
 use App\Filters\Course\StartedFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filters\Course\DifficultyFilter;
+use App\Filters\Course\Ordering\ViewsOrder;
 
 class CourseFilters extends FiltersAbstract
 {
@@ -18,7 +19,8 @@ class CourseFilters extends FiltersAbstract
     'difficulty' => DifficultyFilter::class,
     'type' => TypeFilter::class,
     'subject' => SubjectFilter::class,
-    'started' => StartedFilter::class
+    'started' => StartedFilter::class,
+    'views' => ViewsOrder::class
   ];
 
 
