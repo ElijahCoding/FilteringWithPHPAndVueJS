@@ -1,7 +1,7 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-sm-3">
-      filters
+      <filters endpoint="/api/courses/filters"></filters>
     </div>
 
     <div class="col-sm-9">
@@ -18,11 +18,13 @@
 <script>
   import Course from './partials/Course.vue';
   import Pagination from '../pagination/Pagination.vue';
+  import Filters from './partials/Filters.vue';
 
   export default {
     components: {
       Course,
-      Pagination
+      Pagination,
+      Filters
     },
 
     data() {
