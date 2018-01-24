@@ -50180,24 +50180,72 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "filters" },
-    _vm._l(_vm.filters, function(map, key) {
-      return _c(
-        "div",
-        { staticClass: "list-group" },
-        [
-          _vm._l(map, function(filter, value) {
-            return _c(
+    [
+      _vm.filtersInUse
+        ? _c("p", [
+            _c(
               "a",
-              { staticClass: "list-group-item", attrs: { href: "#" } },
-              [_vm._v("\n    " + _vm._s(filter) + "\n  ")]
+              {
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.clearFilters($event)
+                  }
+                }
+              },
+              [_vm._v("Clear all filters")]
             )
-          }),
-          _vm._v(" "),
-          _c("hr")
-        ],
-        2
-      )
-    })
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm._l(_vm.filters, function(map, key) {
+        return _c(
+          "div",
+          { staticClass: "list-group" },
+          [
+            _vm._l(map, function(filter, value) {
+              return _c(
+                "a",
+                {
+                  staticClass: "list-group-item",
+                  class: { active: _vm.selectedFilters[key] === value },
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.activateFilter(key, value)
+                    }
+                  }
+                },
+                [_vm._v("\n    " + _vm._s(filter) + "\n  ")]
+              )
+            }),
+            _vm._v(" "),
+            _vm.selectedFilters[key]
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "list-group-item list-group-item-info",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.clearFilter(key)
+                      }
+                    }
+                  },
+                  [_vm._v("\n      × Clear this filter\n    ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("hr")
+          ],
+          2
+        )
+      })
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -50216,6 +50264,25 @@ if (false) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50234,20 +50301,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['endpoint'],
+    props: ['endpoint'],
+    data: function data() {
+        return {
+            filters: {},
+            selectedFilters: _.omit(this.$route.query, ['page'])
+        };
+    },
+    mounted: function mounted() {
+        var _this = this;
 
-  data: function data() {
-    return {
-      filters: {}
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
+        axios.get(this.endpoint).then(function (response) {
+            _this.filters = response.data.data;
+        });
+    },
 
-    axios.get(this.endpoint).then(function (response) {
-      _this.filters = response.data.data;
-    });
-  }
+    computed: {
+        filtersInUse: function filtersInUse() {
+            return !_.isEmpty(this.selectedFilters);
+        }
+    },
+    methods: {
+        activateFilter: function activateFilter(key, value) {
+            this.selectedFilters = Object.assign({}, this.selectedFilters, _defineProperty({}, key, value));
+            this.updateQueryString();
+        },
+        clearFilter: function clearFilter(key) {
+            this.selectedFilters = _.omit(this.selectedFilters, key);
+            this.updateQueryString();
+        },
+        clearFilters: function clearFilters() {
+            this.selectedFilters = {};
+            this.$router.replace({ query: {} });
+        },
+        updateQueryString: function updateQueryString() {
+            this.$router.replace({
+                query: _extends({}, this.selectedFilters, {
+                    page: 1
+                })
+            });
+        }
+    }
 });
 
 /***/ })
